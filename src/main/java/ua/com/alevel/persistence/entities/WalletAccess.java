@@ -1,11 +1,11 @@
 package ua.com.alevel.persistence.entities;
 
 import jakarta.persistence.*;
-import ua.com.alevel.persistence.types.TransactionType;
+import ua.com.alevel.persistence.types.AccessLevel;
 
 @Entity
-@Table(name = "transactions")
-public class Transaction extends BaseEntity {
+@Table(name = "wallet_access")
+public class WalletAccess extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -15,13 +15,11 @@ public class Transaction extends BaseEntity {
     @JoinColumn(name = "wallet_id", nullable = false)
     private Wallet wallet;
 
-    @Column(nullable = false)
-    private Double amount;
-
     @Enumerated(EnumType.STRING)
-    private TransactionType type;
+    @Column(name = "access_level", nullable = false)
+    private AccessLevel accessLevel;
 
-    public Transaction() {
+    public WalletAccess() {
     }
 
     public User getUser() {
@@ -40,19 +38,11 @@ public class Transaction extends BaseEntity {
         this.wallet = wallet;
     }
 
-    public Double getAmount() {
-        return amount;
+    public AccessLevel getAccessLevel() {
+        return accessLevel;
     }
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
-    public TransactionType getType() {
-        return type;
-    }
-
-    public void setType(TransactionType type) {
-        this.type = type;
+    public void setAccessLevel(AccessLevel accessLevel) {
+        this.accessLevel = accessLevel;
     }
 }

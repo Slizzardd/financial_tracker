@@ -16,7 +16,6 @@ import java.time.Instant;
 public class RefreshTokenServiceImpl implements RefreshTokenService {
 
     private static final Logger logger = LoggerFactory.getLogger(RefreshTokenServiceImpl.class);
-
     private final RefreshTokenRepository refreshTokenRepository;
     private final JwtService jwtService;
 

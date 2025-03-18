@@ -37,13 +37,17 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         logger.info("Processing request: {}", request.getRequestURI());
+
+            if (shouldNotFilter(request)) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+
         try {
             String token = getJWTFromRequest(request);
 
             if (StringUtils.hasText(token) && jwtService.authCheck(token)) {
                 String username = jwtService.extractUsername(token);
-
-                logger.info("Valid JWT token. User: {}", username);
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
                 UsernamePasswordAuthenticationToken authenticationToken =
@@ -51,14 +55,16 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            } else {
+                logger.warn("Invalid or missing JWT token");
             }
         } catch (Exception e) {
             logger.warn("Error during validation of JWT token: {}", e.getMessage());
-            SecurityContextHolder.clearContext();
         }
 
         filterChain.doFilter(request, response);
     }
+
 
     private String getJWTFromRequest(HttpServletRequest request) {
         return jwtService.extractToken(request.getHeader("Authorization")).orElse(null);

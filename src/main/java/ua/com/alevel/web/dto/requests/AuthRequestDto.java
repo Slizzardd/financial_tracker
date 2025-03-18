@@ -1,6 +1,6 @@
 package ua.com.alevel.web.dto.requests;
 
-public class AuthRequestDto extends BaseRequestDto{
+public class AuthRequestDto extends BaseRequestDto {
 
     private String email;
 

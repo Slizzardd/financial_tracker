@@ -5,7 +5,7 @@ import ua.com.alevel.persistence.types.Role;
 
 import java.time.Instant;
 
-public class UserResponseDto extends BaseResponseDto{
+public class UserResponseDto extends BaseResponseDto {
 
 
     private Long id;

@@ -10,12 +10,16 @@ public class RefreshToken extends BaseEntity {
 
     @Column(name = "token", nullable = false, unique = true)
     private String token;
+
     @Column(name = "expires_at", nullable = false)
     private Instant expiresAt;
+
     @Column(name = "ip_address", nullable = false)
     private String ipAddress;
+
     @Column(name = "device_name")
     private String deviceName;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

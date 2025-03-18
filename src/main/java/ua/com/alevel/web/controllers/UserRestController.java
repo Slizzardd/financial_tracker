@@ -18,9 +18,8 @@ public class UserRestController {
         this.userFacade = userFacade;
     }
 
-    @PostMapping("/create")
+    @PostMapping("/register")
     public ResponseEntity<?> createUser(@RequestBody UserRequestDto userRequestDto) {
-
         return ResponseEntity.ok(userFacade.createUser(userRequestDto));
     }
 

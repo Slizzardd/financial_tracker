@@ -20,7 +20,6 @@ public class UserFacadeImpl implements UserFacade {
 
     @Override
     public UserResponseDto createUser(UserRequestDto req) {
-
         User user = new User();
         fillUserFromDto(req, user);
         user.setPassword(req.getPassword());

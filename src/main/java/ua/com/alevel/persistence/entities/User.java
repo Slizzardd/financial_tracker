@@ -4,11 +4,12 @@ import jakarta.persistence.*;
 import ua.com.alevel.persistence.types.Role;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User extends BaseEntity{
+public class User extends BaseEntity {
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -23,6 +24,9 @@ public class User extends BaseEntity{
     private Role role;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<RefreshToken> refreshTokens = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<WalletAccess> walletAccesses = new HashSet<>();
 
     @Column(name = "accountNonExpired", nullable = false)
     private Boolean accountNonExpired;
@@ -39,6 +43,14 @@ public class User extends BaseEntity{
         this.accountNonLocked = true;
         this.credentialsNonExpired = true;
         this.accountNonExpired = true;
+    }
+
+    public Set<WalletAccess> getWalletAccesses() {
+        return walletAccesses;
+    }
+
+    public void setWalletAccesses(Set<WalletAccess> walletAccesses) {
+        this.walletAccesses = walletAccesses;
     }
 
     public String getFirstName() {
@@ -111,5 +123,18 @@ public class User extends BaseEntity{
 
     public void setRefreshTokens(Set<RefreshToken> refreshTokens) {
         this.refreshTokens = refreshTokens;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && role == user.role;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, email, password, role);
     }
 }
