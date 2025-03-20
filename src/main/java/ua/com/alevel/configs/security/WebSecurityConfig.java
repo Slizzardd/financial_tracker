@@ -53,7 +53,11 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/users/register", "/api/v1/auth/login", "/api/v1/auth/refresh").permitAll()  // Открытые эндпоинты для регистрации и логина
+                        .requestMatchers("/api/v1/users/register",
+                                "/api/v1/auth/login",
+                                "/api/v1/auth/refresh",
+                                "/**"
+                        ).permitAll()
                         .requestMatchers("/api/v1/**").authenticated()
                         .anyRequest().authenticated()
                 )

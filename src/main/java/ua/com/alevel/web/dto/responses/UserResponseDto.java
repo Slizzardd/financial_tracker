@@ -26,6 +26,9 @@ public class UserResponseDto extends BaseResponseDto {
         this.role = user.getRole();
     }
 
+    public UserResponseDto() {
+    }
+
     public Long getId() {
         return id;
     }
